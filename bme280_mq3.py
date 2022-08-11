@@ -21,7 +21,7 @@ def read_MQ3():
   return alcohol,BAC
 
 # print values and save data to csv file
-with open('/home/pi/data/'+datetime.now().strftime("%Y%m%d-%H%M%S")+'_log.csv','a') as file:
+with open('/home/krupke-group/data/'+datetime.now().strftime("%Y%m%d-%H%M%S")+'_log.csv','a') as file:
   file.write("{0},{1},{2},{3},{4},{5}\n".format("DateTime","temperature/°C","pressure/hPa","humidity/%","alcohol/mg^-1","BAC/mgl^-1"))
   
   #beat.set_rate(1) # rate at which computation is to be performed in Hz
