@@ -30,9 +30,9 @@ print(chan3.value, chan3.voltage)
 def cH2_ppm(Vout):
   Vin = 5 # input voltage in V
   RL = 10e3 # load resistance in Ohm
-  Rs_air = 323e3 # sensor resistance in clean air in Ohm
+  Rs_air = 215225 # sensor resistance in clean air in Ohm
   Rs_H2air = RL*(Vin/Vout-1)
-  cH2_ppm = (Rs_air/Rs_H2air*10**2.49)**1/1.45 # in ppm
+  cH2_ppm = (Rs_air/Rs_H2air*10**2.49)**(1/1.45) # in ppm
   return cH2_ppm
 
 # calculating alcohol concentration from MQ-3 (see MQ3_sensor.ipynb)
@@ -41,7 +41,7 @@ def cAlc_mgl(Vout):
   RL = 200e3 # load resistance in Ohm
   Rs_air = 10e6 # sensor resistance in clean air in Ohm
   Rs_Alc_air = RL*(Vin/Vout-1)
-  cAlc_mgl = (Rs_air/Rs_Alc_air*10**-2.045)**1/0.665 # in mgl^-1
+  cAlc_mgl = (Rs_air/Rs_Alc_air*10**-2.045)**(1/0.665) # in mgl^-1
   return cAlc_mgl
 
 print('cH2 = %.2f ppm' %cH2_ppm(chan0.voltage))
