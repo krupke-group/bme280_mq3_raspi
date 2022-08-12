@@ -30,12 +30,6 @@ chan1 = AnalogIn(ads, ADS.P1)
 chan2 = AnalogIn(ads, ADS.P2)
 chan3 = AnalogIn(ads, ADS.P3)
 
-# print channel value and voltage
-print(chan0.value, chan0.voltage)
-print(chan1.value, chan1.voltage)
-print(chan2.value, chan2.voltage)
-print(chan3.value, chan3.voltage)
-
 # calculating hydrogen concentration from MQ-8 (see MQ8_sensor.ipynb)
 def cH2_ppm(Vout):
   Vin = 5 # input voltage in V
@@ -54,9 +48,6 @@ def cAlc_mgl(Vout):
   cAlc_mgl = (Rs_air/Rs_Alc_air*10**-2.045)**(1/0.665) # in mgl^-1
   return cAlc_mgl
 
-print('cH2 = %.2f ppm' %cH2_ppm(chan0.voltage))
-print('cAlc = %.2f mg/l' %cAlc_mgl(chan1.voltage))
-
 # print values and save data to csv file
 with open('/home/krupke-group/data/'+datetime.now().strftime("%Y%m%d-%H%M%S")+'_log.csv','a') as file:
   file.write("{0},{1},{2},{3},{4},{5}\n".format("DateTime","temperature/°C","pressure/hPa","humidity/%","cH2/ppm","cAlc/mgl^-1"))
@@ -71,6 +62,10 @@ with open('/home/krupke-group/data/'+datetime.now().strftime("%Y%m%d-%H%M%S")+'_
     cAlc = cAlc_mgl(chan1.voltage)
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3] 
     print(timestamp)
+    print(chan0.value, chan0.voltage)
+    print(chan1.value, chan1.voltage)
+    print(chan2.value, chan2.voltage)
+    print(chan3.value, chan3.voltage)
     print("Temperature = %.2f C" %temperature,"Pressure = %.2f hPa" %pressure,"Humidity = %.2f %%" %humidity, "cH2 = %.2f ppm" %cH2_ppm(chan0.voltage),"cAlc = %.2f mg/l" %cAlc_mgl(chan1.voltage))
     file.write("{0},{1},{2},{3},{4},{5}\n".format(timestamp,'%.2f' %temperature,'%.2f' %pressure,'%.2f' %humidity,'%.2f' %cH2_ppm(chan0.voltage),'%.2f' %cAlc_mgl(chan1.voltage)))
     #beat.sleep()
