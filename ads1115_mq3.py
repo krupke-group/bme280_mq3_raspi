@@ -26,16 +26,16 @@ print(chan1.value, chan1.voltage)
 print(chan2.value, chan2.voltage)
 print(chan3.value, chan3.voltage)
 
-# calculating hydrogen concentration from MQ-8 (see MQ8_sensor.ipynb)
-def cH2_ppm(Vout):
+# calculating alcohol concentration from MQ-3 (see MQ3_sensor.ipynb)
+def cAlc_mgl(Vout):
   Vin = 5 # input voltage in V
-  RL = 10e3 # load resistance in Ohm
-  Rs_air = 215225 # sensor resistance in clean air in Ohm
-  Rs_H2air = RL*(Vin/Vout-1)
-  cH2_ppm = (Rs_air/Rs_H2air*10**2.49)**(1/1.45) # in ppm
-  return cH2_ppm
+  RL = 200e3 # load resistance in Ohm
+  Rs_air = 4.8e6 # sensor resistance in clean air in Ohm
+  Rs_Alc_air = RL*(Vin/Vout-1)
+  cAlc_mgl = (Rs_air/Rs_Alc_air*10**-2.045)**(1/0.665) # in mgl^-1
+  return cAlc_mgl
 
-print('cH2 = %.2f ppm' %cH2_ppm(chan0.voltage))
+print('cAlc = %.2f mg/l' %cAlc_mgl(chan1.voltage))
 
 # For differential mode, you provide two pins when setting up the ADC channel.
 # The reading will be the difference between the two. Here, we use pin 0 and 1:
